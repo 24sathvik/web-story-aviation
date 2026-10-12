@@ -1,0 +1,139 @@
+{
+  "layout": [
+    {
+      "name": "Hero (ScrollTrack)",
+      "sel": ".cinematic-scroll-track",
+      "exists": true,
+      "offsetTop": 0,
+      "offsetHeight": 4338,
+      "top": 0,
+      "height": 4338,
+      "zIndex": "auto",
+      "position": "relative"
+    },
+    {
+      "name": "AcademyIntroduction",
+      "sel": "#academy",
+      "exists": true,
+      "offsetTop": 4338,
+      "offsetHeight": 1591,
+      "top": 4338,
+      "height": 1591,
+      "zIndex": "auto",
+      "position": "static"
+    },
+    {
+      "name": "TrainingPrograms",
+      "sel": "#programs",
+      "exists": true,
+      "offsetTop": 5929,
+      "offsetHeight": 2571,
+      "top": 5929,
+      "height": 2571,
+      "zIndex": "auto",
+      "position": "static"
+    },
+    {
+      "name": "TrainingJourney",
+      "sel": "#journey",
+      "exists": true,
+      "offsetTop": 8500,
+      "offsetHeight": 4285,
+      "top": 8500,
+      "height": 4285,
+      "zIndex": "auto",
+      "position": "static"
+    },
+    {
+      "name": "FleetSection",
+      "sel": "#fleet",
+      "exists": true,
+      "offsetTop": 12785,
+      "offsetHeight": 2992,
+      "top": 12785,
+      "height": 2992,
+      "zIndex": "auto",
+      "position": "static"
+    },
+    {
+      "name": "FacilitySection",
+      "sel": "#facilities",
+      "exists": true,
+      "offsetTop": 15777,
+      "offsetHeight": 3355,
+      "top": 15777,
+      "height": 3355,
+      "zIndex": "auto",
+      "position": "static"
+    },
+    {
+      "name": "ProofSection",
+      "sel": "#why-choose-us",
+      "exists": true,
+      "offsetTop": 19131,
+      "offsetHeight": 1596,
+      "top": 19131,
+      "height": 1596,
+      "zIndex": "auto",
+      "position": "static"
+    },
+    {
+      "name": "StoriesSection",
+      "sel": "#stories",
+      "exists": true,
+      "offsetTop": 20727,
+      "offsetHeight": 1101,
+      "top": 20727,
+      "height": 1101,
+      "zIndex": "auto",
+      "position": "static"
+    },
+    {
+      "name": "FAQSection",
+      "sel": "#faq",
+      "exists": true,
+      "offsetTop": 21829,
+      "offsetHeight": 816,
+      "top": 21829,
+      "height": 816,
+      "zIndex": "auto",
+      "position": "static"
+    },
+    {
+      "name": "AdmissionsTransition",
+      "sel": "#admissions",
+      "exists": true,
+      "offsetTop": 22645,
+      "offsetHeight": 684,
+      "top": 22645,
+      "height": 684,
+      "zIndex": "auto",
+      "position": "static"
+    },
+    {
+      "name": "Footer",
+      "sel": "#site-footer",
+      "exists": true,
+      "offsetTop": 23329,
+      "offsetHeight": 389,
+      "top": 23329,
+      "height": 389,
+      "zIndex": "20",
+      "position": "relative"
+    }
+  ],
+  "navStates": {
+    "heroNav": {
+      "bg": "lab(1.66926 0.478566 -5.03502 / 0.85)",
+      "borderBottomWidth": "1px",
+      "backdropFilter": "blur(12px)"
+    },
+    "postHeroNav": {
+      "bg": "lab(1.66926 0.478566 -5.03502 / 0.85)",
+      "borderBottomWidth": "1px",
+      "backdropFilter": "blur(12px)"
+    }
+  },
+  "consoleErrors": [],
+  "failedRequests": []
+}

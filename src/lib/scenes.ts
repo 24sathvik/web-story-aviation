@@ -1,0 +1,152 @@
+import { CinematicSceneConfig } from "./scene-types";
+
+const RAW_SCENES: (CinematicSceneConfig & { startProgress?: number; endProgress?: number; })[] = [
+  {
+    id: "scene_01_aircraft",
+    index: 1,
+    slug: "aircraft",
+    label: "SCENE 01 - AIRCRAFT",
+    videoStart: 0.0,
+    videoEnd: 1.5,
+    scrollWeight: 120,
+    intensity: "L3",
+    purpose: "ESTABLISH",
+    imageStrategy: "VIDEO_TO_IMAGE",
+    cameraBehavior: "PUSH_FORWARD",
+  },
+  {
+    id: "scene_02_campus",
+    index: 2,
+    slug: "campus",
+    label: "SCENE 02 - AERIAL CAMPUS",
+    videoStart: 1.5,
+    videoEnd: 3.0,
+    scrollWeight: 100,
+    intensity: "L1",
+    purpose: "INFORM",
+    imageStrategy: "PARALLAX",
+    cameraBehavior: "ASCEND",
+  },
+  {
+    id: "scene_03_entrance",
+    index: 3,
+    slug: "entrance",
+    label: "SCENE 03 - ENTRANCE",
+    videoStart: 3.0,
+    videoEnd: 4.0,
+    scrollWeight: 80,
+    intensity: "L3",
+    purpose: "IMPRESS",
+    imageStrategy: "MASKED_REVEAL",
+    cameraBehavior: "ENTER_STRUCTURE",
+  },
+  {
+    id: "scene_04_interior",
+    index: 4,
+    slug: "interior",
+    label: "SCENE 04 - INTERIOR",
+    videoStart: 4.0,
+    videoEnd: 5.0,
+    scrollWeight: 100,
+    intensity: "L2",
+    purpose: "TRANSITION",
+    imageAvailable: false,
+    imageStrategy: "DEPTH_LAYER",
+    cameraBehavior: "CORRIDOR_FORWARD",
+  },
+  {
+    id: "scene_05_training",
+    index: 5,
+    slug: "training",
+    label: "SCENE 05 - TRAINING",
+    videoStart: 5.0,
+    videoEnd: 6.0,
+    scrollWeight: 60,
+    intensity: "L1",
+    purpose: "INFORM",
+    imageStrategy: "SECONDARY_LAYER",
+    cameraBehavior: "PUSH_FORWARD",
+  },
+  {
+    id: "scene_06_simulator",
+    index: 6,
+    slug: "simulator",
+    label: "SCENE 06 - SIMULATOR",
+    videoStart: 6.0,
+    videoEnd: 7.0,
+    scrollWeight: 80,
+    intensity: "L3",
+    purpose: "IMMERSE",
+    imageStrategy: "VIDEO_TO_IMAGE_HERO",
+    cameraBehavior: "HERO_PUSH",
+  },
+  {
+    id: "scene_07_cockpit",
+    index: 7,
+    slug: "cockpit",
+    label: "SCENE 07 - COCKPIT",
+    videoStart: 7.0,
+    videoEnd: 7.5,
+    scrollWeight: 80,
+    intensity: "L2",
+    purpose: "IMMERSE",
+    imageStrategy: "VIDEO_TO_IMAGE_PARALLAX",
+    cameraBehavior: "COCKPIT_ENTRY",
+  },
+  {
+    id: "scene_08_return",
+    index: 8,
+    slug: "return",
+    label: "SCENE 08 - RETURN TO EXTERIOR",
+    videoStart: 7.5,
+    videoEnd: 8.5,
+    scrollWeight: 60,
+    intensity: "L2",
+    purpose: "RELEASE",
+    imageStrategy: "VIDEO_PRIMARY",
+    cameraBehavior: "EXTERIOR_RELEASE",
+  },
+  {
+    id: "scene_09_finale",
+    index: 9,
+    slug: "finale",
+    label: "SCENE 09 - AIRCRAFT FINALE",
+    videoStart: 8.5,
+    videoEnd: 9.5,
+    scrollWeight: 60,
+    intensity: "L2",
+    purpose: "RESOLVE",
+    imageStrategy: "SUBTLE_LAYER",
+    cameraBehavior: "PULL_BACK",
+  },
+  {
+    id: "scene_10_aerial",
+    index: 10,
+    slug: "aerial",
+    label: "SCENE 10 - FINAL AERIAL",
+    videoStart: 9.5,
+    videoEnd: 10.0,
+    scrollWeight: 60,
+    intensity: "L1",
+    purpose: "CONVERT",
+    imageStrategy: "FINAL_HOLD",
+    cameraBehavior: "DESCEND",
+  }
+];
+
+export const TOTAL_SCROLL_WEIGHT = RAW_SCENES.reduce((acc, scene) => acc + scene.scrollWeight, 0);
+
+let accumulatedWeight = 0;
+export const CINEMATIC_SCENES: CinematicSceneConfig[] = RAW_SCENES.map((scene) => {
+  const prevWeight = accumulatedWeight;
+  accumulatedWeight += scene.scrollWeight;
+  
+  const startProgress = prevWeight / TOTAL_SCROLL_WEIGHT;
+  const endProgress = accumulatedWeight / TOTAL_SCROLL_WEIGHT;
+  
+  return {
+    ...scene,
+    startProgress,
+    endProgress,
+  };
+});
