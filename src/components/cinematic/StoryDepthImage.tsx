@@ -41,6 +41,8 @@ export function StoryDepthImage({ scene, reducedMotion }: StoryDepthImageProps) 
     return unsubscribe;
   }, [enter, isLoaded, scene.image, subscribe]);
 
+  const wasActiveRef = useRef(false);
+
   useEffect(() => {
     if (!containerRef.current || !imgRef.current) return;
 
@@ -49,11 +51,17 @@ export function StoryDepthImage({ scene, reducedMotion }: StoryDepthImageProps) 
       const isActive = currentFrame >= activeStart && currentFrame <= activeEnd;
 
       if (!isActive) {
-        gsap.set(containerRef.current, { opacity: 0, display: "none" });
+        if (wasActiveRef.current) {
+          wasActiveRef.current = false;
+          gsap.set(containerRef.current, { opacity: 0, display: "none" });
+        }
         return;
       }
       
-      gsap.set(containerRef.current, { display: "flex" });
+      if (!wasActiveRef.current) {
+        wasActiveRef.current = true;
+        gsap.set(containerRef.current, { display: "flex" });
+      }
 
       // Determine precise phase and normalized local progress (0 to 1) within that phase
       let phase = 'PREPARE';

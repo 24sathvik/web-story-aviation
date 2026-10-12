@@ -203,11 +203,12 @@ export function CinematicWebGLLayer() {
         sys06.points.visible = false;
       }
 
-      // --------------------------------------------------
-      // SCENE 09/10: FINAL ATMOSPHERE - REMOVED PER PHASE 5.5.2
-      // --------------------------------------------------
-
-      renderer.render(scene, camera);
+      // Only render WebGL if particles are currently active in Scene 03 or Scene 06
+      if (sys03.points.visible || sys06.points.visible) {
+        renderer.render(scene, camera);
+      } else {
+        renderer.clear();
+      }
       animationFrameId = requestAnimationFrame(render);
     };
 

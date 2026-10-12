@@ -19,6 +19,7 @@ export function FacilitySection() {
     let camera: THREE.PerspectiveCamera;
     let tunnelGroup: THREE.Group;
     let animationFrameId: number;
+    let observer: IntersectionObserver | null = null;
 
     const handleResize = () => {
       if (!canvasRef.current || !camera || !renderer) return;
@@ -79,12 +80,25 @@ export function FacilitySection() {
       const particles = new THREE.Points(particleGeo, particleMat);
       tunnelGroup.add(particles);
 
+      let isVisible = false;
       const render = () => {
-        renderer.render(scene, camera);
-        tunnelGroup.rotation.z += 0.001; // slow constant ambient rotation
+        if (isVisible) {
+          renderer.render(scene, camera);
+          tunnelGroup.rotation.z += 0.001; // slow constant ambient rotation
+        }
         animationFrameId = requestAnimationFrame(render);
       };
       render();
+
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          isVisible = entry.isIntersecting;
+        },
+        { rootMargin: "300px" }
+      );
+      if (containerRef.current) {
+        observer.observe(containerRef.current);
+      }
 
       window.addEventListener('resize', handleResize);
 
@@ -179,6 +193,7 @@ export function FacilitySection() {
     return () => {
       ctx.revert();
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      observer?.disconnect();
       window.removeEventListener('resize', handleResize);
       renderer?.dispose();
     };

@@ -17,13 +17,14 @@ export function StoryContentLayer() {
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // Pre-cache DOM element references to avoid repetitive DOM queries on every scroll tick
+    // Pre-cache DOM element references and visibility state to avoid repetitive DOM queries
     const sceneElements = new Map<string, {
       sceneEl: HTMLElement;
       headingLines: HTMLElement[];
       eyebrow: HTMLElement | null;
       metaElements: HTMLElement[];
       maskContainer: HTMLElement | null;
+      isVisible: boolean;
     }>();
 
     STORY_SCENES.forEach((scene) => {
@@ -35,6 +36,7 @@ export function StoryContentLayer() {
           eyebrow: sceneEl.querySelector('.cinematic-eyebrow') as HTMLElement | null,
           metaElements: Array.from(sceneEl.querySelectorAll<HTMLElement>('.cinematic-meta')),
           maskContainer: sceneEl.querySelector('.cinematic-mask') as HTMLElement | null,
+          isVisible: true,
         });
       }
     });
@@ -50,11 +52,17 @@ export function StoryContentLayer() {
         const { enter, holdStart, holdEnd, exit } = scene.choreography;
 
         if (currentFrame < enter || currentFrame > exit) {
-          gsap.set(sceneEl, { opacity: 0, pointerEvents: "none" });
+          if (cached.isVisible) {
+            cached.isVisible = false;
+            gsap.set(sceneEl, { opacity: 0, pointerEvents: "none" });
+          }
           return;
         }
 
-        gsap.set(sceneEl, { pointerEvents: "auto" });
+        if (!cached.isVisible) {
+          cached.isVisible = true;
+          gsap.set(sceneEl, { pointerEvents: "auto" });
+        }
 
         // Calculate normalized progress within the scene
         let progress = 0;

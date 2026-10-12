@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 export function useLenis() {
   const lenisRef = useRef<Lenis | null>(null);
@@ -17,14 +17,17 @@ export function useLenis() {
     }
 
     const lenis = new Lenis({
-      lerp: 0.08, // Replaces duration/easing with responsive lerp
+      lerp: 0.1,
       wheelMultiplier: 1,
-      touchMultiplier: 1.5,
+      touchMultiplier: 1.2,
       orientation: "vertical",
       gestureOrientation: "vertical",
     });
     lenisRef.current = lenis;
     setTimeout(() => setLenisStatus("ACTIVE"), 0);
+
+    // Synchronize Lenis scroll position directly with GSAP ScrollTrigger
+    lenis.on("scroll", ScrollTrigger.update);
 
     // Sync Lenis with GSAP's Ticker
     const updateLenis = (time: number) => {
@@ -39,7 +42,14 @@ export function useLenis() {
     // Make GSAP ticker run independently of its internal lag smoothing
     gsap.ticker.lagSmoothing(0);
 
+    const onRefresh = () => {
+      lenis.resize();
+    };
+    ScrollTrigger.addEventListener("refresh", onRefresh);
+
     return () => {
+      ScrollTrigger.removeEventListener("refresh", onRefresh);
+      lenis.off("scroll", ScrollTrigger.update);
       gsap.ticker.remove(updateLenis);
       lenis.destroy();
       lenisRef.current = null;

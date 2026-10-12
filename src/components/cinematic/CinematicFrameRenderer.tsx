@@ -31,8 +31,8 @@ export function CinematicFrameRenderer() {
 
     // Set canvas internal resolution to handle DPR
     const updateCanvasSize = () => {
-      // Max out DPR at 2 for performance, unless device is lower
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // Cap DPR at 1.5 for optimal draw performance and crisp rendering of 720p frames
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       const rect = canvas.getBoundingClientRect();
       const w = rect.width > 0 ? rect.width : window.innerWidth;
       const h = rect.height > 0 ? rect.height : window.innerHeight;
