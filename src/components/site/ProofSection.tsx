@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { trustPillars, metrics } from "@/data/trust";
 import Image from "next/image";
+import { ScrollTerrainBackground } from "@/components/cinematic/ScrollTerrainBackground";
 
 export function ProofSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -102,15 +103,28 @@ export function ProofSection() {
       ref={containerRef}
       className="w-full relative z-10 bg-[var(--background)] px-6 md:px-12 lg:px-24 pt-48 pb-32 md:pb-48 overflow-hidden"
     >
-      <div className="absolute inset-0 pointer-events-none transform-gpu z-0">
+      <div className="absolute inset-0 pointer-events-none transform-gpu z-0 opacity-15">
         <Image 
           src="/images/entrance/glass-entrance.jpg" 
           alt="Academy Entrance"
           fill
-          className="proof-bg object-cover object-center will-change-transform mix-blend-screen opacity-10"
+          className="proof-bg object-cover object-center will-change-transform mix-blend-screen"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-[var(--background)]/80 to-[var(--background)]" />
       </div>
+
+      {/* 3D Scroll-Reactive Tidecrest Particle & Ridgeline Terrain Background */}
+      <ScrollTerrainBackground 
+        variant="proof"
+        elevation={7.8}
+        crestColor={0x00e5ff}
+        midColor={0x1d4ed8}
+        baseColor={0x0b132b}
+        scrollDistance={32.0}
+        opacity={0.88}
+        pointSize={3.0}
+        wireframeOpacity={0.42}
+        interactive={true}
+      />
       <div className="max-w-[1600px] mx-auto w-full mb-32 md:mb-48 trust-header-trigger relative z-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
           <div className="col-span-1 md:col-span-8 flex flex-col gap-6">
